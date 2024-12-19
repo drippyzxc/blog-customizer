@@ -21,11 +21,19 @@ export const useOutsideClickClose = ({
 				onChange?.(false);
 			}
 		};
+		const closeEsc = (evt: KeyboardEvent) => {
+			if (evt.key === 'Escape') {
+				onChange(false);
+			}
+		};
+
+		window.addEventListener('keyup', closeEsc);
 
 		window.addEventListener('mousedown', handleClick);
 
 		return () => {
 			window.removeEventListener('mousedown', handleClick);
+			window.addEventListener('keyup', closeEsc);
 		};
 	}, [onClose, onChange, isOpen]);
 };
